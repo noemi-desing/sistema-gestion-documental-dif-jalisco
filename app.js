@@ -1,12 +1,35 @@
-function loadCatalogs() {
-  alert("Catalogs module opened.");
+// ============================================
+// Sistema de Gestión Documental DIF Jalisco
+// Archivo: app.js
+// ============================================
+
+// Mensaje base institucional
+function showInfo(message) {
+  alert(message);
 }
-function openInventory() {
-  alert("Inventory module opened.");
+
+// Funciones de navegación / demostración
+function openOverview() {
+  showInfo("System overview loaded.");
 }
-function manageAssignments() {
-  alert("Assignments module opened.");
+
+function openFunctions() {
+  showInfo("Core system functions loaded.");
 }
-function generateReports() {
-  alert("Reports generated successfully.");
+
+function openArchive() {
+  showInfo("Document archive module loaded.");
 }
+
+function openCADIDO() {
+  showInfo("CADIDO rules are applied automatically.");
+}
+
+function openPermissions() {
+  showInfo("User permissions loaded.");
+}
+
+// Mensaje de carga inicial
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("Document Management System DIF Jalisco loaded successfully.");
+});
