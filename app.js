@@ -1,21 +1,22 @@
 // ======================================================
 // Sistema de Gestión y Sistematización Documental
-// Sistema DIF Jalisco
+// DIF Jalisco – Dirección de Planeación Institucional
 // Archivo: app.js
-// Versión: Funcional institucional (CADIDO + Registro)
+// Cumplimiento: Ley de Archivos / CONARCH / CGCA / CADIDO
 // ======================================================
 
 // ------------------------------------------------------
-// Configuración institucional
+// Configuración institucional fija (NO editable)
 // ------------------------------------------------------
-const CONFIG_INSTITUCIONAL = {
+const INSTITUCION = {
   fondo: "Sistema DIF Jalisco",
   seccion: "Dirección de Planeación Institucional",
   areaResponsable: "Departamento de Seguimiento y Evaluación"
 };
 
 // ------------------------------------------------------
-// Reglas CADIDO (ejemplo base, ampliable)
+// Reglas CADIDO (instrumento de control archivístico)
+// SOLO ADMINISTRABLE A NIVEL SISTEMA
 // ------------------------------------------------------
 const CADIDO = {
   "PLN-01": {
@@ -37,133 +38,132 @@ const CADIDO = {
 };
 
 // ------------------------------------------------------
-// Modelo institucional de registro documental
+// Validación normativa mínima (obligatoria)
 // ------------------------------------------------------
-function crearRegistroDocumental(datos) {
-  const regla = CADIDO[datos.codigoCADIDO];
+function validarDatos(datos) {
+  const camposObligatorios = [
+    "codigoCADIDO",
+    "tipoDocumental",
+    "numeroDocumento",
+    "fechaDocumento",
+    "areaProductora",
+    "areaDestinataria",
+    "asunto",
+    "soporte"
+  ];
 
-  if (!regla) {
-    throw new Error("Código CADIDO no válido.");
+  for (let campo of camposObligatorios) {
+    if (!datos[campo]) {
+      throw new Error(`Campo obligatorio faltante: ${campo}`);
+    }
   }
 
+  if (!CADIDO[datos.codigoCADIDO]) {
+    throw new Error("Código CADIDO no reconocido por el sistema.");
+  }
+}
+
+// ------------------------------------------------------
+// Creación de registro archivístico (NO editable)
+// ------------------------------------------------------
+function crearRegistroArchivistico(datos) {
+  validarDatos(datos);
+
+  const regla = CADIDO[datos.codigoCADIDO];
+
   return {
+    // Identificación
     idRegistro: Date.now(),
     codigoCADIDO: datos.codigoCADIDO,
-    fondo: CONFIG_INSTITUCIONAL.fondo,
-    seccion: CONFIG_INSTITUCIONAL.seccion,
+
+    // Clasificación archivística
+    fondo: INSTITUCION.fondo,
+    seccion: INSTITUCION.seccion,
     serie: regla.serie,
     subserie: regla.subserie,
+
+    // Datos documentales
     tipoDocumental: datos.tipoDocumental,
     numeroDocumento: datos.numeroDocumento,
     fechaDocumento: datos.fechaDocumento,
     fechaRegistro: new Date().toISOString().split("T")[0],
+
+    // Contexto institucional
     areaProductora: datos.areaProductora,
     areaDestinataria: datos.areaDestinataria,
     asunto: datos.asunto,
-    funcionSustantiva: datos.funcionSustantiva,
+    funcionSustantiva: datos.funcionSustantiva || "",
+
+    // Valoración documental (CADIDO)
     valorDocumental: regla.valorDocumental,
     vigenciaTramite: regla.vigenciaTramite,
     vigenciaConcentracion: regla.vigenciaConcentracion,
     destinoFinal: regla.destinoFinal,
+
+    // Control
     soporte: datos.soporte,
-    expediente: datos.expediente || false,
-    observaciones: datos.observaciones || ""
+    integraExpediente: Boolean(datos.expediente),
+    observaciones: datos.observaciones || "",
+
+    // Estado archivístico
+    estado: "Trámite"
   };
 }
 
 // ------------------------------------------------------
-// Almacenamiento institucional (localStorage)
+// Almacenamiento histórico (registro diario e histórico)
 // ------------------------------------------------------
 function obtenerRegistros() {
-  return JSON.parse(localStorage.getItem("registrosDocumentales")) || [];
+  return JSON.parse(localStorage.getItem("archivoInstitucional")) || [];
 }
 
 function guardarRegistro(registro) {
   const registros = obtenerRegistros();
   registros.push(registro);
-  localStorage.setItem("registrosDocumentales", JSON.stringify(registros));
-}
-
-function eliminarRegistros() {
-  localStorage.removeItem("registrosDocumentales");
+  localStorage.setItem("archivoInstitucional", JSON.stringify(registros));
 }
 
 // ------------------------------------------------------
-// Funciones institucionales del sistema
+// Función oficial de registro documental
 // ------------------------------------------------------
 function registrarDocumento(datos) {
   try {
-    const registro = crearRegistroDocumental(datos);
+    const registro = crearRegistroArchivistico(datos);
     guardarRegistro(registro);
-    console.log("Registro documental guardado:", registro);
+    console.info("Registro archivístico generado conforme a normativa:", registro);
+    return true;
   } catch (error) {
-    console.error("Error en el registro:", error.message);
+    console.error("Error normativo en el registro:", error.message);
+    return false;
   }
 }
 
+// ------------------------------------------------------
+// Consulta histórica (solo lectura)
+// ------------------------------------------------------
 function consultarRegistros() {
   return obtenerRegistros();
 }
 
 // ------------------------------------------------------
-// Navegación institucional (base)
+// Navegación institucional (sin impacto archivístico)
 // ------------------------------------------------------
 function openOverview() {
-  console.info("Vista general del sistema cargada.");
-}
-
-function openFunctions() {
-  console.info("Funciones del sistema cargadas.");
+  console.info("Vista general cargada.");
 }
 
 function openArchive() {
-  console.info("Módulo de archivo cargado.");
+  console.info("Módulo de registro documental activo.");
 }
 
 function openCADIDO() {
-  console.info("Reglas CADIDO activas y aplicadas automáticamente.");
+  console.info("Instrumentos de control archivístico aplicados automáticamente.");
 }
-
-function openPermissions() {
-  console.info("Permisos institucionales cargados.");
-}
-
-// ------------------------------------------------------
-// Resaltado de sección activa en navegación
-// ------------------------------------------------------
-window.addEventListener("scroll", () => {
-  const sections = document.querySelectorAll("section");
-  const navLinks = document.querySelectorAll(".navigation a");
-
-  let currentSection = "";
-
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop - 140;
-    if (window.scrollY >= sectionTop) {
-      currentSection = section.getAttribute("id");
-    }
-  });
-
-  navLinks.forEach(link => {
-    link.classList.remove("active");
-    if (link.getAttribute("href") === `#${currentSection}`) {
-      link.classList.add("active");
-    }
-  });
-});
 
 // ------------------------------------------------------
 // Inicialización del sistema
 // ------------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Sistema de Gestión Documental DIF Jalisco inicializado correctamente.");
-});
-
-
-// --------------------------------------------
-// Confirmación de carga del sistema
-// --------------------------------------------
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("Document Management System DIF Jalisco loaded successfully.");
+  console.log("Sistema de Gestión Documental inicializado conforme a normativa archivística.");
 });
 
