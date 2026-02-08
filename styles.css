@@ -261,14 +261,13 @@ input:focus, select:focus, textarea:focus{
 }
 .modal-body{ padding:12px; }
 
-/* FOOTER */
 .footer{
   background:var(--gray);
   color:#fff;
   text-align:center;
-  padding:14px 10px;
+  padding:18px 10px;
+  margin-top:20vh;
 }
-/* AJUSTES PORTADA */
 .home-centered {
   margin-top: 6vh;
   margin-bottom: 6vh;
