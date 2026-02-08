@@ -1,4 +1,17 @@
 /* =========================
+   VARIABLES INSTITUCIONALES
+========================= */
+:root {
+  --color-primario: #f28c00;
+  --color-secundario: #6b7280;
+  --color-fondo: #f4f6f8;
+  --color-texto: #333;
+  --color-blanco: #ffffff;
+  --sombra-suave: 0 6px 14px rgba(0, 0, 0, 0.08);
+  --radio: 12px;
+}
+
+/* =========================
    RESET
 ========================= */
 * {
@@ -12,8 +25,8 @@
 ========================= */
 body {
   font-family: "Segoe UI", Arial, sans-serif;
-  background-color: #f4f6f8;
-  color: #333;
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
   line-height: 1.6;
 }
 
@@ -21,8 +34,8 @@ body {
    HEADER
 ========================= */
 .header {
-  background-color: #6b7280;
-  color: white;
+  background-color: var(--color-secundario);
+  color: var(--color-blanco);
   text-align: center;
   padding: 40px 20px;
 }
@@ -47,7 +60,10 @@ body {
    NAVIGATION
 ========================= */
 .navigation {
-  background-color: #f28c00;
+  background-color: var(--color-primario);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .navigation ul {
@@ -60,13 +76,24 @@ body {
 }
 
 .navigation a {
-  color: white;
+  color: var(--color-blanco);
   text-decoration: none;
   font-weight: 600;
   font-size: 0.95rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
 }
 
-.navigation a:hover {
+.navigation a:hover,
+.navigation a:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  outline: none;
+}
+
+/* 👉 Conecta con app.js */
+.navigation a.activo {
+  background-color: rgba(0, 0, 0, 0.2);
   text-decoration: underline;
 }
 
@@ -83,16 +110,18 @@ main {
    SECTIONS
 ========================= */
 .section {
-  background-color: white;
+  background-color: var(--color-blanco);
   padding: 30px;
   margin-bottom: 30px;
-  border-radius: 12px;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-suave);
 }
 
 .section h2 {
-  color: #f28c00;
+  color: var(--color-primario);
   margin-bottom: 15px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 6px;
 }
 
 .section p {
@@ -111,9 +140,18 @@ main {
    FOOTER
 ========================= */
 .footer {
-  background-color: #6b7280;
-  color: white;
+  background-color: var(--color-secundario);
+  color: var(--color-blanco);
   text-align: center;
   padding: 18px;
   font-size: 0.9rem;
 }
+
+/* =========================
+   ACCESIBILIDAD BÁSICA
+========================= */
+a:focus {
+  outline: 2px dashed var(--color-primario);
+  outline-offset: 4px;
+}
+
