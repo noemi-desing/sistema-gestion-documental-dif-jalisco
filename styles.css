@@ -4,14 +4,11 @@
 ========================= */
 
 /* 1️⃣ Ocultar texto inferior de portada */
-body{
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.main{
-  flex: 1;
+.home-footer,
+.home p,
+.home small,
+.home .hint {
+  display: none !important;
 }
 
 /* 2️⃣ Centrar botones de portada */
@@ -65,9 +62,21 @@ body{
 }
 
 .logo-header {
-  position: relative;
-  z-index: 10;
+  position: absolute;
+  right: 22px;
+  top: -22px;
+  background: white;
+  padding: 6px 10px;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(0,0,0,.25);
 }
+
+/* 8️⃣ Bajar más la franja gris inferior */
+.footer {
+  margin-top: 80px;
+}
+
+
 
 
 
