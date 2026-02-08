@@ -2,197 +2,177 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Sistema de Gestión Documental | DIF Jalisco</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
+  <title>Sistema de Gestión Documental y Correspondencia – DIF Jalisco</title>
+  <meta name="description" content="Documentación del Sistema de Gestión Documental y Correspondencia de la Dirección de Planeación Institucional del DIF Jalisco">
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      margin: 40px;
+      max-width: 1100px;
+    }
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
+    nav {
+      background: #f4f6f8;
+      padding: 20px;
+      border-left: 5px solid #2c3e50;
+    }
+    nav ol {
+      padding-left: 20px;
+    }
+    section {
+      margin-top: 60px;
+    }
+    footer {
+      margin-top: 80px;
+      font-size: 0.9em;
+      color: #555;
+    }
+  </style>
 </head>
 
 <body>
 
-<header class="header">
-  <img src="LOGO DIF.jpg" alt="Logotipo DIF Jalisco" class="logo">
-  <h1>Sistema de Gestión Documental</h1>
-  <p>Dirección de Planeación Institucional – DIF Jalisco</p>
-</header>
+  <header>
+    <h1>Sistema de Gestión Documental y Correspondencia</h1>
+    <h2>Dirección de Planeación Institucional<br>DIF Jalisco</h2>
+    <p>
+      Documento técnico que describe la estructura, funcionamiento y cumplimiento
+      normativo del sistema institucional de gestión documental.
+    </p>
+  </header>
 
-<nav class="navigation">
-  <ul>
-    <li><a href="#overview">Descripción</a></li>
-    <li><a href="#registro">Registro</a></li>
-    <li><a href="#consulta">Consulta</a></li>
-    <li><a href="#cadido">CADIDO</a></li>
-    <li><a href="#permissions">Permisos</a></li>
-  </ul>
-</nav>
+  <nav>
+    <h3>Índice de contenidos</h3>
+    <ol>
+      <li><a href="#presentacion">Presentación del proyecto</a></li>
+      <li><a href="#antecedentes">Antecedentes</a></li>
+      <li><a href="#objetivo">Objetivo general</a></li>
+      <li><a href="#alcance">Alcance del proyecto</a></li>
 
-<main>
+      <li>
+        <a href="#descripcion">Descripción general del sistema</a>
+        <ol>
+          <li><a href="#funcion">Función del sistema</a></li>
+          <li><a href="#tipologia">Tipología documental</a></li>
+          <li><a href="#volumen">Volumen de registros</a></li>
+        </ol>
+      </li>
 
-<!-- DESCRIPCIÓN -->
-<section id="overview" class="section">
-  <h2>Descripción General del Sistema</h2>
-  <p>
-    Plataforma institucional para el registro, clasificación, control y
-    conservación de la documentación generada y recibida por la Dirección
-    de Planeación Institucional, conforme a la normativa archivística vigente.
-  </p>
-</section>
+      <li>
+        <a href="#flujo">Flujo de gestión documental</a>
+        <ol>
+          <li><a href="#entrada">Documentos de entrada</a></li>
+          <li><a href="#salida">Documentos de salida</a></li>
+          <li><a href="#seguimiento">Derivación y seguimiento</a></li>
+          <li><a href="#respuestas">Generación de respuestas</a></li>
+        </ol>
+      </li>
 
-<!-- REGISTRO DOCUMENTAL FUNCIONAL -->
-<section id="registro" class="section">
-  <h2>Registro Documental</h2>
+      <li>
+        <a href="#normativa">Clasificación archivística y normativa</a>
+        <ol>
+          <li><a href="#cgca">CGCA</a></li>
+          <li><a href="#cadido">Aplicación del CADIDO</a></li>
+          <li><a href="#valoracion">Valoración documental</a></li>
+        </ol>
+      </li>
 
-  <form id="formRegistro">
+      <li>
+        <a href="#archivo">Gestión del archivo documental</a>
+        <ol>
+          <li><a href="#tramite">Archivo de Trámite</a></li>
+          <li><a href="#concentracion">Archivo de Concentración</a></li>
+          <li><a href="#plazos">Plazos y alertas</a></li>
+        </ol>
+      </li>
 
-    <label>Código CADIDO</label>
-    <select id="codigoCADIDO" required>
-      <option value="">Seleccione</option>
-      <option value="PLN-01">PLN-01 Planeación Institucional</option>
-      <option value="PLN-02">PLN-02 Evaluación Institucional</option>
-    </select>
+      <li><a href="#campos">Campos del registro documental</a></li>
+      <li><a href="#alertas">Alertas, controles y evidencias</a></li>
+      <li><a href="#perfiles">Perfiles de usuario</a></li>
+      <li><a href="#infraestructura">Infraestructura tecnológica</a></li>
+      <li><a href="#estado">Estado actual del proyecto</a></li>
+      <li><a href="#implementacion">Ruta de implementación</a></li>
+      <li><a href="#conclusiones">Conclusiones</a></li>
+      <li><a href="#anexos">Anexos técnicos</a></li>
+    </ol>
+  </nav>
 
-    <label>Tipo documental</label>
-    <input type="text" id="tipoDocumental" required>
+  <!-- SECCIONES BASE (listas para documentar) -->
 
-    <label>Número de documento</label>
-    <input type="text" id="numeroDocumento" required>
+  <section id="presentacion">
+    <h2>1. Presentación del proyecto</h2>
+  </section>
 
-    <label>Fecha del documento</label>
-    <input type="date" id="fechaDocumento" required>
+  <section id="antecedentes">
+    <h2>2. Antecedentes</h2>
+  </section>
 
-    <label>Área productora</label>
-    <input type="text" id="areaProductora" required>
+  <section id="objetivo">
+    <h2>3. Objetivo general</h2>
+  </section>
 
-    <label>Área destinataria</label>
-    <input type="text" id="areaDestinataria" required>
+  <section id="alcance">
+    <h2>4. Alcance del proyecto</h2>
+  </section>
 
-    <label>Asunto</label>
-    <input type="text" id="asunto" required>
+  <section id="descripcion">
+    <h2>5. Descripción general del sistema</h2>
+  </section>
 
-    <label>Función sustantiva</label>
-    <input type="text" id="funcionSustantiva">
+  <section id="flujo">
+    <h2>6. Flujo de gestión documental</h2>
+  </section>
 
-    <label>Soporte</label>
-    <select id="soporte" required>
-      <option value="Papel">Papel</option>
-      <option value="Digital">Digital</option>
-      <option value="Mixto">Mixto</option>
-    </select>
+  <section id="normativa">
+    <h2>7. Clasificación archivística y cumplimiento normativo</h2>
+  </section>
 
-    <label>
-      <input type="checkbox" id="expediente">
-      Integra expediente
-    </label>
+  <section id="archivo">
+    <h2>8. Gestión del archivo documental</h2>
+  </section>
 
-    <label>Observaciones</label>
-    <input type="text" id="observaciones">
+  <section id="campos">
+    <h2>9. Campos del registro documental</h2>
+  </section>
 
-    <button type="submit">Registrar documento</button>
-  </form>
-</section>
+  <section id="alertas">
+    <h2>10. Alertas, controles y evidencias</h2>
+  </section>
 
-<!-- CONSULTA HISTÓRICA FUNCIONAL -->
-<section id="consulta" class="section">
-  <h2>Consulta de Registros</h2>
-  <button onclick="mostrarRegistros()">Actualizar</button>
+  <section id="perfiles">
+    <h2>11. Perfiles de usuario y niveles de acceso</h2>
+  </section>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Folio</th>
-        <th>CADIDO</th>
-        <th>Serie</th>
-        <th>Tipo</th>
-        <th>Asunto</th>
-        <th>Fecha</th>
-        <th>Destino final</th>
-      </tr>
-    </thead>
-    <tbody id="tablaRegistros"></tbody>
-  </table>
-</section>
+  <section id="infraestructura">
+    <h2>12. Infraestructura tecnológica</h2>
+  </section>
 
-<!-- CADIDO -->
-<section id="cadido" class="section">
-  <h2>Integración CADIDO</h2>
-  <p>
-    El Catálogo de Disposición Documental se aplica de forma automática
-    por el sistema. Los códigos, valores documentales, vigencias y destino
-    final no son editables por los usuarios.
-  </p>
-</section>
+  <section id="estado">
+    <h2>13. Estado actual del proyecto</h2>
+  </section>
 
-<!-- PERMISOS -->
-<section id="permissions" class="section">
-  <h2>Permisos de Usuario</h2>
-  <ul>
-    <li>Jefaturas y Asistentes: Registro y seguimiento documental.</li>
-    <li>Usuarios Generales: Consulta.</li>
-    <li>Dirección General: Consulta integral.</li>
-  </ul>
-</section>
+  <section id="implementacion">
+    <h2>14. Ruta de implementación</h2>
+  </section>
 
-</main>
+  <section id="conclusiones">
+    <h2>15. Conclusiones</h2>
+  </section>
 
-<footer class="footer">
-  <p>© 2026 Sistema DIF Jalisco</p>
-</footer>
+  <section id="anexos">
+    <h2>16. Anexos técnicos</h2>
+  </section>
 
-<script src="app.js"></script>
-
-<script>
-document.getElementById("formRegistro").addEventListener("submit", function(e) {
-  e.preventDefault();
-
-  const datos = {
-    codigoCADIDO: document.getElementById("codigoCADIDO").value,
-    tipoDocumental: document.getElementById("tipoDocumental").value,
-    numeroDocumento: document.getElementById("numeroDocumento").value,
-    fechaDocumento: document.getElementById("fechaDocumento").value,
-    areaProductora: document.getElementById("areaProductora").value,
-    areaDestinataria: document.getElementById("areaDestinataria").value,
-    asunto: document.getElementById("asunto").value,
-    funcionSustantiva: document.getElementById("funcionSustantiva").value,
-    soporte: document.getElementById("soporte").value,
-    expediente: document.getElementById("expediente").checked,
-    observaciones: document.getElementById("observaciones").value
-  };
-
-  const ok = registrarDocumento(datos);
-  if (ok) {
-    alert("Documento registrado conforme a normativa.");
-    this.reset();
-    mostrarRegistros();
-  } else {
-    alert("Error normativo en el registro.");
-  }
-});
-
-function mostrarRegistros() {
-  const registros = consultarRegistros();
-  const tbody = document.getElementById("tablaRegistros");
-  tbody.innerHTML = "";
-
-  registros.forEach(r => {
-    tbody.innerHTML += `
-      <tr>
-        <td>${r.idRegistro}</td>
-        <td>${r.codigoCADIDO}</td>
-        <td>${r.serie}</td>
-        <td>${r.tipoDocumental}</td>
-        <td>${r.asunto}</td>
-        <td>${r.fechaDocumento}</td>
-        <td>${r.destinoFinal}</td>
-      </tr>`;
-  });
-}
-</script>
+  <footer>
+    <p>
+      Sistema de Gestión Documental y Correspondencia – Dirección de Planeación Institucional, DIF Jalisco.<br>
+      Documento técnico en proceso de validación institucional.
+    </p>
+  </footer>
 
 </body>
 </html>
 
-
-
-
-<script src="app.js"></script>
-</body>
-</html>
