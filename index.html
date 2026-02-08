@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <!-- FRANJA SUPERIOR (GRIS) + LOGO -->
+  <!-- HEADER -->
   <header class="header">
     <div class="header-text">
       <h1>Gestión Documental y Correspondencia</h1>
@@ -17,12 +17,10 @@
     <img src="./catalogos/logo_dif.png" alt="Logo DIF Jalisco" class="logo-header" />
   </header>
 
+  <!-- HOME: 5 BOTONES -->
   <main class="main">
-
-    <!-- =========================
-         HOME (SOLO 5 BOTONES)
-    ========================== -->
     <section id="homeView" class="card home">
+      <h2>Selecciona un área</h2>
       <div class="home-buttons">
         <button class="home-btn primary" data-view="direccionView">
           Dirección de Planeación Institucional
@@ -44,11 +42,14 @@
           Departamento de Capacitación e Investigación
         </button>
       </div>
+
+      <div class="home-footer">
+        <small>⚠️ La información se guarda en este navegador (base local). Para modo institucional multiusuario, se migra a SharePoint.</small>
+      </div>
     </section>
 
     <!-- =========================
-         VISTA: DIRECCIÓN
-         (aquí empieza todo)
+         VISTA DIRECCIÓN
     ========================== -->
     <section id="direccionView" class="card hidden">
       <div class="topbar">
@@ -57,34 +58,13 @@
           <h2>Dirección de Planeación Institucional</h2>
         </div>
         <div class="topbar-right">
-          <input id="dirSearch" class="search" type="text" placeholder="Buscar folio / número / asunto..." />
+          <input id="dirSearch" class="search" type="text" placeholder="Buscar folio / asunto / área..." />
         </div>
       </div>
 
-      <!-- ACCIONES DIRECCIÓN -->
-      <div class="actions-row">
-        <button id="dirExportTrimestre" class="btn primary">⬇ Descargar informe trimestral</button>
-        <button id="dirExportConcentracion" class="btn gray">⬇ Descargar reporte anual</button>
-      </div>
-
-      <!-- PASO 1: SUBIR DOCUMENTO -->
+      <!-- FORM DIRECCIÓN -->
       <div class="panel">
-        <h3>1) Subir documento</h3>
-        <div class="grid-2">
-          <div>
-            <label class="label">Archivo (PDF / Word / Escaneo)</label>
-            <input id="dirFile" type="file" />
-          </div>
-          <div>
-            <label class="label">Vista previa</label>
-            <div id="dirPreview" class="readonly-box">Sube un archivo para continuar…</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- PASO 2: REGISTRO (solo campos manuales visibles) -->
-      <div class="panel">
-        <h3>2) Registro del documento</h3>
+        <h3>Subir y registrar documento</h3>
 
         <div class="grid-3">
           <div>
@@ -95,6 +75,26 @@
             </select>
           </div>
 
+          <div>
+            <label class="label">Carácter</label>
+            <select id="dirCaracter">
+              <option value="CONOCIMIENTO" selected>CONOCIMIENTO</option>
+              <option value="RESPUESTA">RESPUESTA</option>
+              <option value="URGENTE">URGENTE</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="label">Soporte</label>
+            <select id="dirSoporte">
+              <option value="DIGITAL" selected>DIGITAL</option>
+              <option value="FISICO">FÍSICO</option>
+              <option value="MIXTO">MIXTO</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-2">
           <div>
             <label class="label">Tipo documental</label>
             <select id="dirTipoDoc">
@@ -140,72 +140,70 @@
           </div>
         </div>
 
-        <!-- CARÁCTER + FECHA LÍMITE + SEMÁFORO -->
-        <div class="grid-3">
-          <div>
-            <label class="label">Carácter</label>
-            <select id="dirCaracter">
-              <option value="CONOCIMIENTO" selected>CONOCIMIENTO</option>
-              <option value="RESPUESTA">REQUIERE RESPUESTA</option>
-              <option value="URGENTE">URGENTE</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="label">Fecha límite</label>
-            <input id="dirFechaLimite" type="date" />
-          </div>
-
-          <div>
-            <label class="label">Semáforo</label>
-            <select id="dirSemaforo">
-              <option value="VERDE" selected>VERDE</option>
-              <option value="AMARILLO">AMARILLO</option>
-              <option value="ROJO">ROJO</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label class="label">Observaciones</label>
-          <input id="dirObs" type="text" placeholder="Observaciones..." />
-        </div>
-
-        <!-- PASO 3: DERIVACIÓN -->
-        <div class="panel soft">
-          <h3>3) Derivación</h3>
-          <label class="label">Selecciona departamento(s)</label>
-          <div class="checks">
-            <label class="check"><input type="checkbox" id="toPlaneacion" value="Departamento de Planeación y Proyectos"> Departamento de Planeación y Proyectos</label>
-            <label class="check"><input type="checkbox" id="toSeguimiento" value="Departamento de Seguimiento y Evaluación"> Departamento de Seguimiento y Evaluación</label>
-            <label class="check"><input type="checkbox" id="toDesarrollo" value="Departamento de Desarrollo Institucional"> Departamento de Desarrollo Institucional</label>
-            <label class="check"><input type="checkbox" id="toCapacitacion" value="Departamento de Capacitación e Investigación"> Departamento de Capacitación e Investigación</label>
-          </div>
-        </div>
-
-        <!-- CADIDO (no editable, solo lectura) -->
+        <!-- CADIDO (AUTO, NO EDITABLE) -->
         <div class="panel soft">
           <div class="grid-2">
             <div>
-              <label class="label">CADIDO (automático)</label>
-              <div id="cadidoAuto" class="readonly-box">Se generará automáticamente al guardar…</div>
+              <label class="label">Documento (CADIDO)</label>
+              <select id="dirCadidoDoc"></select>
+              <small class="hint">El sistema aplica automáticamente Código CADIDO, Sección/Serie/Subserie, vigencias, destino y clasificación.</small>
             </div>
+
             <div>
               <label class="label">Resumen CADIDO (solo lectura)</label>
-              <div id="cadidoResumen" class="readonly-box">—</div>
+              <div id="cadidoResumen" class="readonly-box">Selecciona un documento CADIDO…</div>
             </div>
+          </div>
+        </div>
+
+        <!-- DERIVACIÓN -->
+        <div class="panel soft">
+          <label class="label">Derivar a departamentos (puedes seleccionar varios)</label>
+          <div class="checks">
+            <label class="check"><input type="checkbox" value="Departamento de Planeación y Proyectos" id="toPlaneacion"> Departamento de Planeación y Proyectos</label>
+            <label class="check"><input type="checkbox" value="Departamento de Seguimiento y Evaluación" id="toSeguimiento"> Departamento de Seguimiento y Evaluación</label>
+            <label class="check"><input type="checkbox" value="Departamento de Desarrollo Institucional" id="toDesarrollo"> Departamento de Desarrollo Institucional</label>
+            <label class="check"><input type="checkbox" value="Departamento de Capacitación e Investigación" id="toCapacitacion"> Departamento de Capacitación e Investigación</label>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <label class="label">Fecha límite</label>
+              <input id="dirFechaLimite" type="date" />
+            </div>
+            <div>
+              <label class="label">Semáforo</label>
+              <select id="dirSemaforo">
+                <option value="VERDE" selected>VERDE</option>
+                <option value="AMARILLO">AMARILLO</option>
+                <option value="ROJO">ROJO</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- ARCHIVO -->
+        <div class="grid-2">
+          <div>
+            <label class="label">Archivo (PDF / Word / Escaneo)</label>
+            <input id="dirFile" type="file" />
+          </div>
+
+          <div>
+            <label class="label">Observaciones</label>
+            <input id="dirObs" type="text" placeholder="Observaciones..." />
           </div>
         </div>
 
         <div class="actions">
-          <button id="dirSave" class="btn primary">Guardar registro</button>
+          <button id="dirSave" class="btn primary">Guardar y derivar</button>
           <button id="dirReset" class="btn gray">Limpiar</button>
         </div>
 
         <div id="dirStatus" class="status"></div>
       </div>
 
-      <!-- BANDEJA DIRECCIÓN -->
+      <!-- LISTADO DIRECCIÓN -->
       <div class="panel">
         <div class="panel-head">
           <h3>Bandeja Dirección</h3>
@@ -220,7 +218,7 @@
     </section>
 
     <!-- =========================
-         VISTAS: DEPARTAMENTOS
+         VISTAS DEPARTAMENTOS
     ========================== -->
     <section id="deptPlaneacionView" class="card hidden dept" data-dept="Departamento de Planeación y Proyectos">
       <div class="topbar">
@@ -232,25 +230,14 @@
           <input class="search deptSearch" type="text" placeholder="Buscar folio / asunto..." />
         </div>
       </div>
-
       <div class="panel">
-        <div class="panel-head">
-          <h3>Bandeja del Departamento</h3>
-          <div class="pill-row">
-            <span class="pill deptTotal">Total: 0</span>
-            <span class="pill deptResp">Requiere respuesta: 0</span>
-            <span class="pill deptUrg">Urgente: 0</span>
-          </div>
+        <h3>Bandeja del Departamento</h3>
+        <div class="pill-row">
+          <span class="pill deptTotal">Total: 0</span>
+          <span class="pill deptResp">Requiere respuesta: 0</span>
+          <span class="pill deptUrg">Urgente: 0</span>
         </div>
         <div class="list deptList"></div>
-      </div>
-
-      <div class="panel soft">
-        <h3>Formatos de respuesta</h3>
-        <div class="actions">
-          <button class="btn primary" data-template="OFICIO">Descargar formato Oficio</button>
-          <button class="btn gray" data-template="MEMO">Descargar formato Memorándum</button>
-        </div>
       </div>
     </section>
 
@@ -264,25 +251,14 @@
           <input class="search deptSearch" type="text" placeholder="Buscar folio / asunto..." />
         </div>
       </div>
-
       <div class="panel">
-        <div class="panel-head">
-          <h3>Bandeja del Departamento</h3>
-          <div class="pill-row">
-            <span class="pill deptTotal">Total: 0</span>
-            <span class="pill deptResp">Requiere respuesta: 0</span>
-            <span class="pill deptUrg">Urgente: 0</span>
-          </div>
+        <h3>Bandeja del Departamento</h3>
+        <div class="pill-row">
+          <span class="pill deptTotal">Total: 0</span>
+          <span class="pill deptResp">Requiere respuesta: 0</span>
+          <span class="pill deptUrg">Urgente: 0</span>
         </div>
         <div class="list deptList"></div>
-      </div>
-
-      <div class="panel soft">
-        <h3>Formatos de respuesta</h3>
-        <div class="actions">
-          <button class="btn primary" data-template="OFICIO">Descargar formato Oficio</button>
-          <button class="btn gray" data-template="MEMO">Descargar formato Memorándum</button>
-        </div>
       </div>
     </section>
 
@@ -296,25 +272,14 @@
           <input class="search deptSearch" type="text" placeholder="Buscar folio / asunto..." />
         </div>
       </div>
-
       <div class="panel">
-        <div class="panel-head">
-          <h3>Bandeja del Departamento</h3>
-          <div class="pill-row">
-            <span class="pill deptTotal">Total: 0</span>
-            <span class="pill deptResp">Requiere respuesta: 0</span>
-            <span class="pill deptUrg">Urgente: 0</span>
-          </div>
+        <h3>Bandeja del Departamento</h3>
+        <div class="pill-row">
+          <span class="pill deptTotal">Total: 0</span>
+          <span class="pill deptResp">Requiere respuesta: 0</span>
+          <span class="pill deptUrg">Urgente: 0</span>
         </div>
         <div class="list deptList"></div>
-      </div>
-
-      <div class="panel soft">
-        <h3>Formatos de respuesta</h3>
-        <div class="actions">
-          <button class="btn primary" data-template="OFICIO">Descargar formato Oficio</button>
-          <button class="btn gray" data-template="MEMO">Descargar formato Memorándum</button>
-        </div>
       </div>
     </section>
 
@@ -328,40 +293,29 @@
           <input class="search deptSearch" type="text" placeholder="Buscar folio / asunto..." />
         </div>
       </div>
-
       <div class="panel">
-        <div class="panel-head">
-          <h3>Bandeja del Departamento</h3>
-          <div class="pill-row">
-            <span class="pill deptTotal">Total: 0</span>
-            <span class="pill deptResp">Requiere respuesta: 0</span>
-            <span class="pill deptUrg">Urgente: 0</span>
-          </div>
+        <h3>Bandeja del Departamento</h3>
+        <div class="pill-row">
+          <span class="pill deptTotal">Total: 0</span>
+          <span class="pill deptResp">Requiere respuesta: 0</span>
+          <span class="pill deptUrg">Urgente: 0</span>
         </div>
         <div class="list deptList"></div>
-      </div>
-
-      <div class="panel soft">
-        <h3>Formatos de respuesta</h3>
-        <div class="actions">
-          <button class="btn primary" data-template="OFICIO">Descargar formato Oficio</button>
-          <button class="btn gray" data-template="MEMO">Descargar formato Memorándum</button>
-        </div>
       </div>
     </section>
 
     <!-- =========================
-         MODAL: RESPUESTA (Deptos)
+         MODAL RESPUESTA
     ========================== -->
     <div id="modal" class="modal hidden" aria-hidden="true">
       <div class="modal-card">
         <div class="modal-head">
-          <h3>Respuesta del Departamento</h3>
+          <h3>Generar respuesta</h3>
           <button id="modalClose" class="btn gray small">Cerrar</button>
         </div>
 
         <div class="modal-body">
-          <div id="modalContext" class="readonly-box">—</div>
+          <div class="readonly-box" id="modalContext">—</div>
 
           <div class="grid-2">
             <div>
@@ -371,24 +325,22 @@
                 <option value="MEMO">Memorándum</option>
               </select>
             </div>
-
             <div>
               <label class="label">Número de documento (respuesta)</label>
-              <input id="respNumero" type="text" placeholder="(Opcional) Se autogenera si lo dejas vacío" />
+              <input id="respNumero" type="text" placeholder="Se autogenera si lo dejas vacío" />
             </div>
           </div>
 
           <div>
-            <label class="label">Sugerencia de respuesta (editable)</label>
-            <textarea id="respTexto" class="textarea" rows="10" placeholder="El sistema sugerirá un texto base aquí..."></textarea>
+            <label class="label">Texto / cuerpo (editable)</label>
+            <textarea id="respTexto" class="textarea" rows="8" placeholder="Redacta aquí..."></textarea>
           </div>
 
           <div class="grid-2">
             <div>
-              <label class="label">Subir respuesta validada / firmada (PDF/Word)</label>
+              <label class="label">Adjuntar respuesta firmada (PDF/Word) (opcional)</label>
               <input id="respFile" type="file" />
             </div>
-
             <div>
               <label class="label">Observaciones</label>
               <input id="respObs" type="text" placeholder="Observaciones..." />
@@ -396,15 +348,14 @@
           </div>
 
           <div class="actions">
-            <button id="respDescargarPlantilla" class="btn primary">Descargar respuesta (editable)</button>
-            <button id="respGuardar" class="btn gray">Guardar respuesta</button>
+            <button id="respDescargarPlantilla" class="btn primary">Descargar plantilla (editable)</button>
+            <button id="respGuardar" class="btn gray">Guardar respuesta en el sistema</button>
           </div>
 
           <div id="respStatus" class="status"></div>
         </div>
       </div>
     </div>
-
   </main>
 
   <footer class="footer">
@@ -414,6 +365,9 @@
   <script src="app.js"></script>
 </body>
 </html>
+
+
+
 
 
 
