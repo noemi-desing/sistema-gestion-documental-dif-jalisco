@@ -128,7 +128,7 @@ body {
   filter: brightness(0.95);
 }
 
-/* RESPONSIVE */
+/* RESPONSIVE HOME */
 @media (max-width: 700px) {
   .home-buttons {
     grid-template-columns: 1fr;
@@ -138,6 +138,55 @@ body {
     max-width: 100%;
   }
 }
+
+/* =========================
+   LISTAS – BANDEJA DOCUMENTAL
+   (ESTILO INSTITUCIONAL)
+========================= */
+.list {
+  margin-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+/* item de documento */
+.list-item {
+  display: grid;
+  grid-template-columns: 130px 1fr 140px 120px;
+  gap: 14px;
+  padding: 14px 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+  align-items: center;
+}
+
+.list-item:hover {
+  background: #f9fafb;
+}
+
+/* columnas */
+.list-item .folio {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.list-item .asunto {
+  color: var(--text);
+}
+
+.list-item .fecha {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.list-item .estado {
+  font-weight: 700;
+  text-align: right;
+}
+
+/* semáforo */
+.estado.verde { color: var(--ok); }
+.estado.amarillo { color: var(--warn); }
+.estado.rojo { color: var(--bad); }
 
 /* =========================
    FOOTER (FRANJA GRIS ABAJO)
