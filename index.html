@@ -18,8 +18,8 @@
 <nav class="navigation">
   <ul>
     <li><a href="#overview">Descripción</a></li>
-    <li><a href="#functions">Funciones</a></li>
-    <li><a href="#archive">Archivo</a></li>
+    <li><a href="#registro">Registro</a></li>
+    <li><a href="#consulta">Consulta</a></li>
     <li><a href="#cadido">CADIDO</a></li>
     <li><a href="#permissions">Permisos</a></li>
   </ul>
@@ -27,55 +27,107 @@
 
 <main>
 
+<!-- DESCRIPCIÓN -->
 <section id="overview" class="section">
   <h2>Descripción General del Sistema</h2>
   <p>
-    Esta plataforma está diseñada para administrar la correspondencia y
-    documentación institucional de la Dirección de Planeación Institucional
-    del Sistema DIF Jalisco. Garantiza orden, trazabilidad, cumplimiento
-    normativo y continuidad institucional durante todo el periodo
-    administrativo.
+    Plataforma institucional para el registro, clasificación, control y
+    conservación de la documentación generada y recibida por la Dirección
+    de Planeación Institucional, conforme a la normativa archivística vigente.
   </p>
 </section>
 
-<section id="functions" class="section">
-  <h2>Funciones del Sistema</h2>
-  <ul>
-    <li>Registro diario de documentos de entrada y salida.</li>
-    <li>Gestión de memorándums, oficios y circulares.</li>
-    <li>Canalización automática a Direcciones y Departamentos.</li>
-    <li>Seguimiento del trámite documental por asistentes y jefaturas.</li>
-    <li>Generación automática de folios y control de numeración.</li>
-    <li>Clasificación archivística automática (independiente del usuario).</li>
-  </ul>
+<!-- REGISTRO DOCUMENTAL FUNCIONAL -->
+<section id="registro" class="section">
+  <h2>Registro Documental</h2>
+
+  <form id="formRegistro">
+
+    <label>Código CADIDO</label>
+    <select id="codigoCADIDO" required>
+      <option value="">Seleccione</option>
+      <option value="PLN-01">PLN-01 Planeación Institucional</option>
+      <option value="PLN-02">PLN-02 Evaluación Institucional</option>
+    </select>
+
+    <label>Tipo documental</label>
+    <input type="text" id="tipoDocumental" required>
+
+    <label>Número de documento</label>
+    <input type="text" id="numeroDocumento" required>
+
+    <label>Fecha del documento</label>
+    <input type="date" id="fechaDocumento" required>
+
+    <label>Área productora</label>
+    <input type="text" id="areaProductora" required>
+
+    <label>Área destinataria</label>
+    <input type="text" id="areaDestinataria" required>
+
+    <label>Asunto</label>
+    <input type="text" id="asunto" required>
+
+    <label>Función sustantiva</label>
+    <input type="text" id="funcionSustantiva">
+
+    <label>Soporte</label>
+    <select id="soporte" required>
+      <option value="Papel">Papel</option>
+      <option value="Digital">Digital</option>
+      <option value="Mixto">Mixto</option>
+    </select>
+
+    <label>
+      <input type="checkbox" id="expediente">
+      Integra expediente
+    </label>
+
+    <label>Observaciones</label>
+    <input type="text" id="observaciones">
+
+    <button type="submit">Registrar documento</button>
+  </form>
 </section>
 
-<section id="archive" class="section">
-  <h2>Archivo Documental</h2>
-  <p>
-    El sistema administra expedientes de trámite y de concentración conforme
-    a la normatividad archivística institucional. Los documentos activos se
-    gestionan de forma trimestral, mientras que los expedientes cerrados se
-    conservan durante todo el periodo administrativo en modo de solo lectura.
-  </p>
+<!-- CONSULTA HISTÓRICA FUNCIONAL -->
+<section id="consulta" class="section">
+  <h2>Consulta de Registros</h2>
+  <button onclick="mostrarRegistros()">Actualizar</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Folio</th>
+        <th>CADIDO</th>
+        <th>Serie</th>
+        <th>Tipo</th>
+        <th>Asunto</th>
+        <th>Fecha</th>
+        <th>Destino final</th>
+      </tr>
+    </thead>
+    <tbody id="tablaRegistros"></tbody>
+  </table>
 </section>
 
+<!-- CADIDO -->
 <section id="cadido" class="section">
   <h2>Integración CADIDO</h2>
   <p>
-    Las reglas archivísticas del CADIDO se integran como una capa interna del
-    sistema. Series, subseries, plazos de conservación, valores documentales
-    y disposición final se aplican de forma automática. Los usuarios no pueden
-    visualizar ni modificar los códigos CADIDO.
+    El Catálogo de Disposición Documental se aplica de forma automática
+    por el sistema. Los códigos, valores documentales, vigencias y destino
+    final no son editables por los usuarios.
   </p>
 </section>
 
+<!-- PERMISOS -->
 <section id="permissions" class="section">
   <h2>Permisos de Usuario</h2>
   <ul>
-    <li>Jefaturas y Asistentes: Edición y atención de documentos.</li>
-    <li>Usuarios Generales: Acceso de solo consulta.</li>
-    <li>Dirección General: Consulta completa del sistema.</li>
+    <li>Jefaturas y Asistentes: Registro y seguimiento documental.</li>
+    <li>Usuarios Generales: Consulta.</li>
+    <li>Dirección General: Consulta integral.</li>
   </ul>
 </section>
 
@@ -86,8 +138,58 @@
 </footer>
 
 <script src="app.js"></script>
+
+<script>
+document.getElementById("formRegistro").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const datos = {
+    codigoCADIDO: document.getElementById("codigoCADIDO").value,
+    tipoDocumental: document.getElementById("tipoDocumental").value,
+    numeroDocumento: document.getElementById("numeroDocumento").value,
+    fechaDocumento: document.getElementById("fechaDocumento").value,
+    areaProductora: document.getElementById("areaProductora").value,
+    areaDestinataria: document.getElementById("areaDestinataria").value,
+    asunto: document.getElementById("asunto").value,
+    funcionSustantiva: document.getElementById("funcionSustantiva").value,
+    soporte: document.getElementById("soporte").value,
+    expediente: document.getElementById("expediente").checked,
+    observaciones: document.getElementById("observaciones").value
+  };
+
+  const ok = registrarDocumento(datos);
+  if (ok) {
+    alert("Documento registrado conforme a normativa.");
+    this.reset();
+    mostrarRegistros();
+  } else {
+    alert("Error normativo en el registro.");
+  }
+});
+
+function mostrarRegistros() {
+  const registros = consultarRegistros();
+  const tbody = document.getElementById("tablaRegistros");
+  tbody.innerHTML = "";
+
+  registros.forEach(r => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${r.idRegistro}</td>
+        <td>${r.codigoCADIDO}</td>
+        <td>${r.serie}</td>
+        <td>${r.tipoDocumental}</td>
+        <td>${r.asunto}</td>
+        <td>${r.fechaDocumento}</td>
+        <td>${r.destinoFinal}</td>
+      </tr>`;
+  });
+}
+</script>
+
 </body>
 </html>
+
 
 
 
