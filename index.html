@@ -3,369 +3,366 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DIF Jalisco — Gestión Documental</title>
+  <title>Sistema Integral de Gestión Documental — DIF Jalisco</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <!-- HEADER -->
-  <header class="header">
-    <div class="header-text">
-      <h1>Gestión Documental y Correspondencia</h1>
-      <p>Dirección de Planeación Institucional — DIF Jalisco</p>
+
+<header class="header">
+  <div class="header-text">
+    <h1>Sistema Integral de Gestión Documental</h1>
+    <p>Dirección de Planeación Institucional — DIF Jalisco</p>
+  </div>
+  <img src="./LOGO DIF.jpg" alt="Logo DIF Jalisco" class="logo-header" />
+</header>
+
+<main class="main">
+
+<!-- =========================================================
+     HOME
+========================================================= -->
+<section id="homeView" class="card home home-centered">
+  <h2>Selecciona una vista</h2>
+
+  <div class="home-buttons">
+    <button class="home-btn primary" data-view="direccionView">
+      Dirección
+    </button>
+
+    <button class="home-btn" data-view="dashboardView">
+      Dashboard Ejecutivo
+    </button>
+
+    <button class="home-btn" data-view="deptPlaneacionView">
+      Planeación y Proyectos
+    </button>
+
+    <button class="home-btn" data-view="deptSeguimientoView">
+      Seguimiento y Evaluación
+    </button>
+
+    <button class="home-btn" data-view="deptDesarrolloView">
+      Desarrollo Institucional
+    </button>
+
+    <button class="home-btn" data-view="deptCapacitacionView">
+      Capacitación e Investigación
+    </button>
+  </div>
+
+  <div class="home-footer">
+    <small>
+      Base institucional única. Cada área visualiza únicamente los documentos derivados.
+    </small>
+  </div>
+</section>
+
+<!-- =========================================================
+     DASHBOARD EJECUTIVO
+========================================================= -->
+<section id="dashboardView" class="card hidden">
+  <div class="topbar">
+    <button class="back-btn" data-back>⬅ Volver</button>
+    <h2>Dashboard Ejecutivo</h2>
+  </div>
+
+  <div class="panel">
+    <h3>Indicadores Generales</h3>
+
+    <div class="pill-row">
+      <span class="pill" id="dashTotal">Total: 0</span>
+      <span class="pill" id="dashRespuesta">Requieren respuesta: 0</span>
+      <span class="pill" id="dashConcluidos">Concluidos: 0</span>
+      <span class="pill" id="dashVencidos">Vencidos: 0</span>
     </div>
-    <img src="./LOGO DIF.jpg" alt="Logo DIF Jalisco" class="logo-header" />
-    
-  </header>
 
-  <!-- HOME: 5 BOTONES -->
-  <main class="main">
-    <section id="homeView" class="card home home-centered">
-      <h2>Selecciona un área</h2>
-      <div class="home-buttons">
-        <button class="home-btn primary" data-view="direccionView">
-          Dirección de Planeación Institucional
-        </button>
+    <div id="dashboardContent" style="margin-top:15px;"></div>
+  </div>
+</section>
 
-        <button class="home-btn" data-view="deptPlaneacionView">
-          Departamento de Planeación y Proyectos
-        </button>
+<!-- =========================================================
+     DIRECCIÓN
+========================================================= -->
+<section id="direccionView" class="card hidden">
 
-        <button class="home-btn" data-view="deptSeguimientoView">
-          Departamento de Seguimiento y Evaluación
-        </button>
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="back-btn" data-back>⬅ Volver</button>
+      <h2>Dirección</h2>
+    </div>
+    <div class="topbar-right">
+      <input id="dirSearch" class="search"
+        type="text"
+        placeholder="Buscar folio / número / asunto / remitente..." />
+    </div>
+  </div>
 
-        <button class="home-btn" data-view="deptDesarrolloView">
-          Departamento de Desarrollo Institucional
-        </button>
+  <!-- PASO 1 -->
+  <div class="panel">
+    <h3>Paso 1 — Subir documento recibido</h3>
 
-        <button class="home-btn" data-view="deptCapacitacionView">
-          Departamento de Capacitación e Investigación
-        </button>
+    <div class="grid-2">
+      <div>
+        <label class="label">Archivo (PDF / Escaneo)</label>
+        <input id="dirFile" type="file" accept=".pdf,.jpg,.jpeg,.png" />
       </div>
 
-      <div class="home-footer">
-        <small>⚠️ La información se guarda en este navegador (base local). Para modo institucional multiusuario, se migra a SharePoint.</small>
+      <div>
+        <label class="label">Tipo esperado (opcional)</label>
+        <select id="dirTipoDocHint">
+          <option value="">Detectar automáticamente</option>
+          <option value="OFICIO">Oficio</option>
+          <option value="MEMO">Memorándum</option>
+          <option value="CIRCULAR">Circular</option>
+        </select>
       </div>
-    </section>
+    </div>
 
-    <!-- =========================
-         VISTA DIRECCIÓN
-    ========================== -->
-    <section id="direccionView" class="card hidden">
-      <div class="topbar">
-        <div class="topbar-left">
-          <button class="back-btn" data-back>⬅ Volver</button>
-          <h2>Dirección de Planeación Institucional</h2>
+    <div class="actions">
+      <button id="btnAnalizarDoc" class="btn primary" disabled>
+        Analizar documento
+      </button>
+      <button id="btnLimpiarCarga" class="btn gray">
+        Limpiar
+      </button>
+    </div>
+
+    <div id="dirUploadStatus" class="status"></div>
+  </div>
+
+  <!-- PASO 2 -->
+  <div class="panel soft">
+    <h3>Paso 2 — Extracción automática</h3>
+
+    <div class="grid-2">
+      <div>
+        <label class="label">Texto detectado</label>
+        <div id="docPreview"
+             class="readonly-box"
+             style="min-height:120px; align-items:flex-start;">
+          —
         </div>
-        <div class="topbar-right">
-          <input id="dirSearch" class="search" type="text" placeholder="Buscar folio / asunto / área..." />
-        </div>
-      </div>
-
-      <!-- FORM DIRECCIÓN -->
-      <div class="panel">
-        <h3>Subir y registrar documento</h3>
-
-        <div class="grid-3">
-          <div>
-            <label class="label">Entrada / Salida</label>
-            <select id="dirInOut">
-              <option value="ENTRADA" selected>ENTRADA</option>
-              <option value="SALIDA">SALIDA</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="label">Carácter</label>
-            <select id="dirCaracter">
-              <option value="CONOCIMIENTO" selected>CONOCIMIENTO</option>
-              <option value="RESPUESTA">RESPUESTA</option>
-              <option value="URGENTE">URGENTE</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="label">Soporte</label>
-            <select id="dirSoporte">
-              <option value="DIGITAL" selected>DIGITAL</option>
-              <option value="FISICO">FÍSICO</option>
-              <option value="MIXTO">MIXTO</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div>
-            <label class="label">Tipo documental</label>
-            <select id="dirTipoDoc">
-              <option value="MEMO" selected>Memorándum</option>
-              <option value="OFICIO">Oficio</option>
-              <option value="CIRCULAR">Circular</option>
-              <option value="OTRO">Otro</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="label">Fecha del documento</label>
-            <input id="dirFechaDoc" type="date" />
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div>
-            <label class="label">Área productora</label>
-            <input id="dirAreaProd" type="text" placeholder="Ej. Dirección General / Área X" />
-          </div>
-
-          <div>
-            <label class="label">Área destinataria</label>
-            <input id="dirAreaDest" type="text" placeholder="Ej. Dirección / Departamento Y" />
-          </div>
-        </div>
-
-        <div>
-          <label class="label">Asunto</label>
-          <input id="dirAsunto" type="text" placeholder="Asunto del documento..." />
-        </div>
-
-        <div class="grid-2">
-          <div>
-            <label class="label">Función sustantiva</label>
-            <input id="dirFuncion" type="text" placeholder="Función sustantiva..." />
-          </div>
-
-          <div>
-            <label class="label">Ubicación digital / física</label>
-            <input id="dirUbicacion" type="text" placeholder="Ej. Plataforma / Carpeta física..." />
-          </div>
-        </div>
-
-        <!-- CADIDO (AUTO, NO EDITABLE) -->
-        <div class="panel soft">
-          <div class="grid-2">
-            <div>
-              <label class="label">Documento (CADIDO)</label>
-              <select id="dirCadidoDoc"></select>
-              <small class="hint">El sistema aplica automáticamente Código CADIDO, Sección/Serie/Subserie, vigencias, destino y clasificación.</small>
-            </div>
-
-            <div>
-              <label class="label">Resumen CADIDO (solo lectura)</label>
-              <div id="cadidoResumen" class="readonly-box">Selecciona un documento CADIDO…</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- DERIVACIÓN -->
-        <div class="panel soft">
-          <label class="label">Derivar a departamentos (puedes seleccionar varios)</label>
-          <div class="checks">
-            <label class="check"><input type="checkbox" value="Departamento de Planeación y Proyectos" id="toPlaneacion"> Departamento de Planeación y Proyectos</label>
-            <label class="check"><input type="checkbox" value="Departamento de Seguimiento y Evaluación" id="toSeguimiento"> Departamento de Seguimiento y Evaluación</label>
-            <label class="check"><input type="checkbox" value="Departamento de Desarrollo Institucional" id="toDesarrollo"> Departamento de Desarrollo Institucional</label>
-            <label class="check"><input type="checkbox" value="Departamento de Capacitación e Investigación" id="toCapacitacion"> Departamento de Capacitación e Investigación</label>
-          </div>
-
-          <div class="grid-2">
-            <div>
-              <label class="label">Fecha límite</label>
-              <input id="dirFechaLimite" type="date" />
-            </div>
-            <div>
-              <label class="label">Semáforo</label>
-              <select id="dirSemaforo">
-                <option value="VERDE" selected>VERDE</option>
-                <option value="AMARILLO">AMARILLO</option>
-                <option value="ROJO">ROJO</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- ARCHIVO -->
-        <div class="grid-2">
-          <div>
-            <label class="label">Archivo (PDF / Word / Escaneo)</label>
-            <input id="dirFile" type="file" />
-          </div>
-
-          <div>
-            <label class="label">Observaciones</label>
-            <input id="dirObs" type="text" placeholder="Observaciones..." />
-          </div>
-        </div>
-
-        <div class="actions">
-          <button id="dirSave" class="btn primary">Guardar y derivar</button>
-          <button id="dirReset" class="btn gray">Limpiar</button>
-        </div>
-
-        <div id="dirStatus" class="status"></div>
       </div>
 
-      <!-- LISTADO DIRECCIÓN -->
-      <div class="panel">
-        <div class="panel-head">
-          <h3>Bandeja Dirección</h3>
-          <div class="pill-row">
-            <span class="pill" id="kpiTotalDir">Total: 0</span>
-            <span class="pill" id="kpiPendientesDir">Pendientes: 0</span>
-            <span class="pill" id="kpiUrgentesDir">Urgentes: 0</span>
-          </div>
-        </div>
-        <div id="dirList" class="list"></div>
-      </div>
-    </section>
-
-    <!-- =========================
-         VISTAS DEPARTAMENTOS
-    ========================== -->
-    <section id="deptPlaneacionView" class="card hidden dept" data-dept="Departamento de Planeación y Proyectos">
-      <div class="topbar">
-        <div class="topbar-left">
-          <button class="back-btn" data-back>⬅ Volver</button>
-          <h2>Departamento de Planeación y Proyectos</h2>
-        </div>
-        <div class="topbar-right">
-          <input class="search deptSearch" type="text" placeholder="Buscar folio / asunto..." />
-        </div>
-      </div>
-      <div class="panel">
-        <h3>Bandeja del Departamento</h3>
-        <div class="pill-row">
-          <span class="pill deptTotal">Total: 0</span>
-          <span class="pill deptResp">Requiere respuesta: 0</span>
-          <span class="pill deptUrg">Urgente: 0</span>
-        </div>
-        <div class="list deptList"></div>
-      </div>
-    </section>
-
-    <section id="deptSeguimientoView" class="card hidden dept" data-dept="Departamento de Seguimiento y Evaluación">
-      <div class="topbar">
-        <div class="topbar-left">
-          <button class="back-btn" data-back>⬅ Volver</button>
-          <h2>Departamento de Seguimiento y Evaluación</h2>
-        </div>
-        <div class="topbar-right">
-          <input class="search deptSearch" type="text" placeholder="Buscar folio / asunto..." />
-        </div>
-      </div>
-      <div class="panel">
-        <h3>Bandeja del Departamento</h3>
-        <div class="pill-row">
-          <span class="pill deptTotal">Total: 0</span>
-          <span class="pill deptResp">Requiere respuesta: 0</span>
-          <span class="pill deptUrg">Urgente: 0</span>
-        </div>
-        <div class="list deptList"></div>
-      </div>
-    </section>
-
-    <section id="deptDesarrolloView" class="card hidden dept" data-dept="Departamento de Desarrollo Institucional">
-      <div class="topbar">
-        <div class="topbar-left">
-          <button class="back-btn" data-back>⬅ Volver</button>
-          <h2>Departamento de Desarrollo Institucional</h2>
-        </div>
-        <div class="topbar-right">
-          <input class="search deptSearch" type="text" placeholder="Buscar folio / asunto..." />
-        </div>
-      </div>
-      <div class="panel">
-        <h3>Bandeja del Departamento</h3>
-        <div class="pill-row">
-          <span class="pill deptTotal">Total: 0</span>
-          <span class="pill deptResp">Requiere respuesta: 0</span>
-          <span class="pill deptUrg">Urgente: 0</span>
-        </div>
-        <div class="list deptList"></div>
-      </div>
-    </section>
-
-    <section id="deptCapacitacionView" class="card hidden dept" data-dept="Departamento de Capacitación e Investigación">
-      <div class="topbar">
-        <div class="topbar-left">
-          <button class="back-btn" data-back>⬅ Volver</button>
-          <h2>Departamento de Capacitación e Investigación</h2>
-        </div>
-        <div class="topbar-right">
-          <input class="search deptSearch" type="text" placeholder="Buscar folio / asunto..." />
-        </div>
-      </div>
-      <div class="panel">
-        <h3>Bandeja del Departamento</h3>
-        <div class="pill-row">
-          <span class="pill deptTotal">Total: 0</span>
-          <span class="pill deptResp">Requiere respuesta: 0</span>
-          <span class="pill deptUrg">Urgente: 0</span>
-        </div>
-        <div class="list deptList"></div>
-      </div>
-    </section>
-
-    <!-- =========================
-         MODAL RESPUESTA
-    ========================== -->
-    <div id="modal" class="modal hidden" aria-hidden="true">
-      <div class="modal-card">
-        <div class="modal-head">
-          <h3>Generar respuesta</h3>
-          <button id="modalClose" class="btn gray small">Cerrar</button>
-        </div>
-
-        <div class="modal-body">
-          <div class="readonly-box" id="modalContext">—</div>
-
-          <div class="grid-2">
-            <div>
-              <label class="label">Tipo de respuesta</label>
-              <select id="respTipo">
-                <option value="OFICIO" selected>Oficio</option>
-                <option value="MEMO">Memorándum</option>
-              </select>
-            </div>
-            <div>
-              <label class="label">Número de documento (respuesta)</label>
-              <input id="respNumero" type="text" placeholder="Se autogenera si lo dejas vacío" />
-            </div>
-          </div>
-
-          <div>
-            <label class="label">Texto / cuerpo (editable)</label>
-            <textarea id="respTexto" class="textarea" rows="8" placeholder="Redacta aquí..."></textarea>
-          </div>
-
-          <div class="grid-2">
-            <div>
-              <label class="label">Adjuntar respuesta firmada (PDF/Word) (opcional)</label>
-              <input id="respFile" type="file" />
-            </div>
-            <div>
-              <label class="label">Observaciones</label>
-              <input id="respObs" type="text" placeholder="Observaciones..." />
-            </div>
-          </div>
-
-          <div class="actions">
-            <button id="respDescargarPlantilla" class="btn primary">Descargar plantilla (editable)</button>
-            <button id="respGuardar" class="btn gray">Guardar respuesta en el sistema</button>
-          </div>
-
-          <div id="respStatus" class="status"></div>
+      <div>
+        <label class="label">Resumen detectado</label>
+        <div id="detectedSummary"
+             class="readonly-box"
+             style="min-height:120px; align-items:flex-start;">
+          —
         </div>
       </div>
     </div>
-  </main>
+  </div>
 
-  <footer class="footer">
-    <p>© 2026 DIF Jalisco — Gestión Documental</p>
-  </footer>
+  <!-- PASO 3 VALIDACIÓN -->
+  <div class="panel">
+    <h3>Paso 3 — Validación humana</h3>
 
-  <script src="app.js"></script>
+    <div class="grid-3">
+      <div>
+        <label class="label">Entrada / Salida</label>
+        <select id="dirInOut">
+          <option value="ENTRADA">ENTRADA</option>
+          <option value="SALIDA">SALIDA</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="label">Carácter</label>
+        <select id="dirCaracter">
+          <option value="CONOCIMIENTO">CONOCIMIENTO</option>
+          <option value="RESPUESTA">RESPUESTA</option>
+          <option value="URGENTE">URGENTE</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="label">Soporte</label>
+        <select id="dirSoporte">
+          <option value="DIGITAL">DIGITAL</option>
+          <option value="FISICO">FÍSICO</option>
+          <option value="MIXTO">MIXTO</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <label class="label">Número del documento</label>
+        <input id="dirNumeroDocDetectado" type="text" />
+      </div>
+
+      <div>
+        <label class="label">Fecha y hora de recepción</label>
+        <input id="dirSelloFechaHora" type="datetime-local" />
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <label class="label">Remitente</label>
+        <input id="dirRemitente" type="text" />
+      </div>
+
+      <div>
+        <label class="label">Destinatario</label>
+        <input id="dirDestinatario" type="text" />
+      </div>
+    </div>
+
+    <div>
+      <label class="label">Asunto</label>
+      <input id="dirAsunto" type="text" />
+    </div>
+
+    <input type="hidden" id="registroCreadoPor" value="Auxiliar Dirección" />
+  </div>
+
+  <!-- CADIDO -->
+  <div class="panel soft">
+    <h3>Clasificación CADIDO (Automático)</h3>
+
+    <div class="grid-2">
+      <div>
+        <label class="label">Documento CADIDO</label>
+        <select id="dirCadidoDoc"></select>
+      </div>
+
+      <div>
+        <label class="label">Resumen CADIDO</label>
+        <div id="cadidoResumen" class="readonly-box">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DERIVACIÓN -->
+  <div class="panel">
+    <h3>Paso 4 — Derivación</h3>
+
+    <div class="checks">
+      <label class="check"><input type="checkbox" id="toPlaneacion"
+        value="Departamento de Planeación y Proyectos"> Planeación y Proyectos</label>
+
+      <label class="check"><input type="checkbox" id="toSeguimiento"
+        value="Departamento de Seguimiento y Evaluación"> Seguimiento y Evaluación</label>
+
+      <label class="check"><input type="checkbox" id="toDesarrollo"
+        value="Departamento de Desarrollo Institucional"> Desarrollo Institucional</label>
+
+      <label class="check"><input type="checkbox" id="toCapacitacion"
+        value="Departamento de Capacitación e Investigación"> Capacitación e Investigación</label>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <label class="label">Fecha límite</label>
+        <input id="dirFechaLimite" type="date" />
+      </div>
+
+      <div>
+        <label class="label">Semáforo (Automático)</label>
+        <div id="dirSemaforo" class="readonly-box">—</div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="dirSave" class="btn primary">
+        Guardar registro
+      </button>
+      <button id="dirReset" class="btn gray">
+        Limpiar
+      </button>
+    </div>
+
+    <div id="dirStatus" class="status"></div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="panel">
+    <h3>Bandeja Dirección</h3>
+
+    <div class="pill-row">
+      <span class="pill" id="kpiTotalDir">Total: 0</span>
+      <span class="pill" id="kpiPendientesDir">Pendientes: 0</span>
+      <span class="pill" id="kpiUrgentesDir">Urgentes: 0</span>
+      <span class="pill" id="kpiConcluidosDir">Concluidos: 0</span>
+      <span class="pill" id="kpiVencidosDir">Vencidos: 0</span>
+    </div>
+
+    <div class="actions">
+      <button id="btnReporteMensual" class="btn primary">
+        Generar reporte mensual
+      </button>
+      <button id="btnExportCSV" class="btn gray">
+        Exportar base (CSV)
+      </button>
+    </div>
+
+    <div id="dirList" class="list"></div>
+  </div>
+
+</section>
+
+<!-- =========================================================
+     VISTAS DEPARTAMENTOS
+========================================================= -->
+
+<section id="deptPlaneacionView" class="card hidden dept"
+  data-dept="Departamento de Planeación y Proyectos">
+  <div class="topbar">
+    <button class="back-btn" data-back>⬅ Volver</button>
+    <h2>Planeación y Proyectos</h2>
+  </div>
+  <div class="list" data-role="deptList"></div>
+</section>
+
+<section id="deptSeguimientoView" class="card hidden dept"
+  data-dept="Departamento de Seguimiento y Evaluación">
+  <div class="topbar">
+    <button class="back-btn" data-back>⬅ Volver</button>
+    <h2>Seguimiento y Evaluación</h2>
+  </div>
+  <div class="list" data-role="deptList"></div>
+</section>
+
+<section id="deptDesarrolloView" class="card hidden dept"
+  data-dept="Departamento de Desarrollo Institucional">
+  <div class="topbar">
+    <button class="back-btn" data-back>⬅ Volver</button>
+    <h2>Desarrollo Institucional</h2>
+  </div>
+  <div class="list" data-role="deptList"></div>
+</section>
+
+<section id="deptCapacitacionView" class="card hidden dept"
+  data-dept="Departamento de Capacitación e Investigación">
+  <div class="topbar">
+    <button class="back-btn" data-back>⬅ Volver</button>
+    <h2>Capacitación e Investigación</h2>
+  </div>
+  <div class="list" data-role="deptList"></div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <p>© 2026 DIF Jalisco — Sistema Integral de Gestión Documental</p>
+</footer>
+
+<script src="app.js"></script>
+
+<script>
+document.getElementById("dirFile").addEventListener("change", ()=>{
+  document.getElementById("btnAnalizarDoc").disabled =
+    !document.getElementById("dirFile").files.length;
+});
+</script>
+
 </body>
 </html>
+
 
 
 
