@@ -8,8 +8,8 @@
    VARIABLES
 ========================= */
 :root {
-  --primary: #0f172a;
-  --primary-soft: #1e293b;
+ --primary: #f59e0b;
+--primary-soft: #d97706;
   --accent: #111827;
 
   --success: #065f46;
@@ -423,6 +423,16 @@ input:focus, select:focus {
     flex-wrap: wrap;
   }
 
+}
+/* =========================
+   HEADER TEXT FIX
+========================= */
+.header-text {
+  max-width: 75%;
+}
+
+.header-text p {
+  white-space: normal;
 }
 
 
